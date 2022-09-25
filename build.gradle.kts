@@ -14,14 +14,14 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
-}
-
-tasks.test {
-    useJUnitPlatform()
+    testImplementation("io.kotest:kotest-runner-junit5:4.2.0")
 }
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
+}
+tasks.withType<Test>().configureEach {
+    useJUnitPlatform()
 }
 
 tasks{
