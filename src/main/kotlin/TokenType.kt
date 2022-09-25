@@ -13,8 +13,6 @@ enum class TokenType(val stringRep: String) {
     SEMICOLON(";"),
     SLASH("/"),
     STAR("*"),
-
-    // One or two character tokens.
     BANG("!"),
     BANG_EQUAL("!="),
     EQUAL("="),
@@ -23,13 +21,9 @@ enum class TokenType(val stringRep: String) {
     GREATER_EQUAL(">="),
     LESS("<"),
     LESS_EQUAL("<="),
-
-    // Literals.
     IDENTIFIER(""),
     STRING("\""),
     NUMBER(""),
-
-    // Keywords.
     AND("and"),
     CLASS("class"),
     ELSE("else"),
@@ -39,7 +33,6 @@ enum class TokenType(val stringRep: String) {
     IF("if"),
     NIL("nil"),
     OR("or"),
-
     PRINT("print"),
     RETURN("return"),
     SUPER("super"),
@@ -47,7 +40,6 @@ enum class TokenType(val stringRep: String) {
     TRUE("true"),
     VAR("var"),
     WHILE("while"),
-
     EOF("EOF")
 }
 

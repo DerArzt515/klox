@@ -1,5 +1,5 @@
 import io.kotest.core.spec.style.DescribeSpec
-import io.kotest.matchers.shouldBe
+import io.kotest.matchers.collections.shouldContain
 
 class ScannerTest : DescribeSpec({
     describe("scanTokens") {
@@ -8,13 +8,24 @@ class ScannerTest : DescribeSpec({
                 TokenType
                     .values()
                     .map { it.stringRep }
+                    .filter { it != TokenType.STRING.stringRep }
+                    .addTo("\"words\"")
+                    .addTo(1)
+                    .addTo(2.3)
                     .fold("") { acc, next -> "$acc $next" }
             )
 
             val tokens = scanner.scanTokens()
 
-            tokens.size shouldBe TokenType.values().size
+            val types = tokens.map { it.type }
 
+            TokenType.values()
+                .filter { it != TokenType.STRING }
+                .map { types shouldContain it }
         }
     }
 })
+
+fun Collection<Any>.addTo(element: Any): Collection<Any> {
+    return this + element
+}
