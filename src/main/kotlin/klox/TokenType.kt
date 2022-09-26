@@ -1,4 +1,6 @@
-import TokenType.*
+package klox
+
+import klox.TokenType.*
 
 enum class TokenType(val stringRep: String) {
     // Single-character tokens.

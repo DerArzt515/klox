@@ -1,4 +1,6 @@
-import TokenType.*
+package klox
+
+import klox.TokenType.*
 
 val NEW_LINE = '\n'
 
@@ -16,7 +18,7 @@ class Scanner(
             start = current
             scanToken()
         }
-        tokens.add(Token(TokenType.EOF, "", null, line))
+        tokens.add(Token(EOF, "", null, line))
         return tokens.toList()
     }
 

@@ -1,1 +1,0 @@
-/home/arzt/repos/klox/build/classes/kotlin/main/Lox.class:/home/arzt/repos/klox/build/classes/kotlin/main/MainKt.class

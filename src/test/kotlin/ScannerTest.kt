@@ -1,5 +1,7 @@
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.collections.shouldContain
+import klox.Scanner
+import klox.TokenType
 
 class ScannerTest : DescribeSpec({
     describe("scanTokens") {

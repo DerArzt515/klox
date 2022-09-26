@@ -1,9 +1,11 @@
+package klox
+
 import java.io.File
 import java.util.Scanner
 
 fun main(args: Array<String>) {
     println("running")
-    var lox = Lox()
+    val lox = Lox()
     if (args.size > 1) {
         print("Usage: klox [script]")
     } else if (args.size == 1) {
@@ -50,7 +52,7 @@ class Lox {
 
         private fun report(lineNum: Int, where: String, message: String) {
             System.err.println("[line $lineNum] Error $where: $message")
-            hadError = true;
+            hadError = true
         }
     }
 
