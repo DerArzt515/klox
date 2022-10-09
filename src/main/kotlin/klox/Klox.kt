@@ -1,21 +1,20 @@
 package klox
 
 import java.io.File
-import java.util.Scanner
 
 fun main(args: Array<String>) {
     println("running")
-    val lox = Lox()
+    val klox = Klox()
     if (args.size > 1) {
         print("Usage: klox [script]")
     } else if (args.size == 1) {
-        lox.runFile(args[0])
+        klox.runFile(args[0])
     } else {
-        lox.runPrompt()
+        klox.runPrompt()
     }
 }
 
-class Lox {
+class Klox {
     private var hadError = false
 
     fun runFile(path: String) {
@@ -40,14 +39,30 @@ class Lox {
 
     fun run(text: String) {
         val scanner = Scanner(text)
-        val tokens = scanner.tokens().toList()
-        tokens.map { println(it) }
+        val tokens = scanner.scanTokens()
+
+        val parser = Parser(tokens)
+        val expression = parser.parse()
+
+        if (hadError) {
+            return
+        }
+        println(expression?.let { AstPrinter().print(it) })
+
     }
 
     companion object {
         private var hadError = false
         fun error(lineNum: Int, message: String) {
             report(lineNum, "", message)
+        }
+
+        fun error(token: Token, message: String) {
+            if (token.type == TokenType.EOF) {
+                report(token.line, " at end", message)
+            } else {
+                report(token.line, " at '${token.lexeme}'", message)
+            }
         }
 
         private fun report(lineNum: Int, where: String, message: String) {

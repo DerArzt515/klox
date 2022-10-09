@@ -29,7 +29,7 @@ fun defineAst(outputDir: String, baseName: String, types: List<String>) {
 
         write("package klox")
         write("")
-        write("abstract class $baseName() {")
+        write("sealed class $baseName() {")
         defineVisitor(write, baseName, types)
         write("abstract fun <R> accept(visitor: Visitor<R>): R")
         write("}")

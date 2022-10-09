@@ -69,7 +69,7 @@ class Scanner(
                 } else if (isAlpha(character)) {
                     identifier()
                 } else {
-                    Lox.error(line, "Unexpected character [$character]")
+                    Klox.error(line, "Unexpected character [$character]")
                 }
             }
         }
@@ -142,7 +142,7 @@ class Scanner(
             advance()
         }
         if (isAtEnd()) {
-            Lox.error(line, "Unterminated string")
+            Klox.error(line, "Unterminated string")
             return
         }
         // closing the "
