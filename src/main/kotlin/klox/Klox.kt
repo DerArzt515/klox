@@ -16,11 +16,15 @@ fun main(args: Array<String>) {
 
 class Klox {
     private var hadError = false
+    private val interpreter = Interpreter()
 
     fun runFile(path: String) {
         run(File(path).readText(Charsets.UTF_8))
         if (hadError) {
             System.exit(65)
+        }
+        if (hadRuntimeError) {
+            System.exit(70)
         }
     }
 
@@ -42,16 +46,16 @@ class Klox {
         val tokens = scanner.scanTokens()
 
         val parser = Parser(tokens)
-        val expression = parser.parse()
+        val statements = parser.parse()
 
         if (hadError) {
             return
         }
-        println(expression?.let { AstPrinter().print(it) })
-
+        interpreter.interpret(statements)
     }
 
     companion object {
+        private var hadRuntimeError = false
         private var hadError = false
         fun error(lineNum: Int, message: String) {
             report(lineNum, "", message)
@@ -68,6 +72,11 @@ class Klox {
         private fun report(lineNum: Int, where: String, message: String) {
             System.err.println("[line $lineNum] Error $where: $message")
             hadError = true
+        }
+
+        fun runtimeError(ex: RuntimeError) {
+            System.err.println("$ex.message\n[line ${ex.token.line}]")
+            hadRuntimeError = true
         }
     }
 

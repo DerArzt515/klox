@@ -30,7 +30,7 @@ tasks{
         archiveClassifier.set("standalone")
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
         manifest {
-            attributes(mapOf("MainKt" to application.mainClass))
+            attributes(mapOf("Klox" to application.mainClass))
         }
         val sourcesMain = sourceSets.main.get()
         val contents = configurations.runtimeClasspath.get()
@@ -44,16 +44,16 @@ tasks{
 
 tasks.withType<Jar> {
     manifest {
-        attributes["Main-Class"] = "MainKt"
+        attributes["Main-Class"] = "Klox"
     }
 }
 
 tasks.register<JavaExec>("runWithJavaExec") {
     description = "Run the main class with JavaExecTask"
-    main = "MainKt"
-    classpath = sourceSets["main"].runtimeClasspath
+    main = "Klox"
+    classpath = sourceSets["klox"].runtimeClasspath
 }
 
 application {
-    mainClass.set("MainKt")
+    mainClass.set("Klox")
 }

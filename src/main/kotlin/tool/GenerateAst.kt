@@ -4,7 +4,8 @@ import java.io.File
 import java.util.*
 import kotlin.system.exitProcess
 
-val EXPR = "Expression"
+val EXPR = "Expr"
+val STMT = "Stmt"
 typealias StringConsumer = (String) -> Unit
 
 fun main(args: Array<String>) {
@@ -15,10 +16,18 @@ fun main(args: Array<String>) {
     val outputDir = args.first()
     defineAst(
         outputDir, EXPR, listOf(
-            "Binary   -> left: Expression, operator: Token , right: Expression",
-            "Grouping -> expression: Expression",
-            "Literal  -> value: Any",
-            "Unary    -> operator: Token, right: Expression"
+            "Binary   -> left: Expr, operator: Token , right: Expr",
+            "Grouping -> expression: Expr",
+            "Literal  -> value: Any?",
+            "Unary    -> operator: Token, right: Expr",
+            "Variable -> name: Token"
+        )
+    )
+    defineAst(
+        outputDir, STMT, listOf(
+            "Expression -> expression: Expr",
+            "Print -> expression: Expr",
+            "Var -> name: Token, initializer: Expr?"
         )
     )
 }
@@ -31,7 +40,7 @@ fun defineAst(outputDir: String, baseName: String, types: List<String>) {
         write("")
         write("sealed class $baseName() {")
         defineVisitor(write, baseName, types)
-        write("abstract fun <R> accept(visitor: Visitor<R>): R")
+        write("abstract fun <R> accept(visitor: Visitor<R>): R?")
         write("}")
         types.forEach { type ->
             val split = type.split("->").map { it.trim() }
@@ -46,7 +55,7 @@ fun defineVisitor(write: StringConsumer, baseName: String, types: List<String>) 
     write("interface Visitor<R> {")
     types.forEach { type ->
         val typeName = type.split("->").first().trim()
-        write("fun visit$typeName$baseName(${baseName.lowercase(Locale.getDefault())}: $typeName): R")
+        write("fun visit$typeName$baseName(${baseName.lowercase(Locale.getDefault())}: $typeName?): R?")
     }
     write("}")
 }
@@ -64,7 +73,7 @@ fun defineType(
         .fold("") { s: String, acc: String -> "$acc$s" }
 
     writer("class $className($fields): $baseName() {")
-    writer("override fun <R> accept(visitor: Visitor<R>): R { return visitor.visit$className$baseName(this)}")
+    writer("override fun <R> accept(visitor: Visitor<R>): R? { return visitor.visit$className$baseName(this)}")
     writer("}")
 
 }
