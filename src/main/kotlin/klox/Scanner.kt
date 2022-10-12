@@ -61,7 +61,7 @@ class Scanner(
             PLUS.stringRep -> addToken(PLUS)
             SEMICOLON.stringRep -> addToken(SEMICOLON)
             STAR.stringRep -> addToken(STAR)
-            " ", "\r", "\t" -> println("thing")
+            " ", "\r", "\t" -> {}
             "\n" -> line++
             else -> {
                 if (isDigit(character)) {

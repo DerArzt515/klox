@@ -16,6 +16,7 @@ fun main(args: Array<String>) {
     val outputDir = args.first()
     defineAst(
         outputDir, EXPR, listOf(
+            "Assign   -> name: Token, value: Expr",
             "Binary   -> left: Expr, operator: Token , right: Expr",
             "Grouping -> expression: Expr",
             "Literal  -> value: Any?",
@@ -25,9 +26,10 @@ fun main(args: Array<String>) {
     )
     defineAst(
         outputDir, STMT, listOf(
+            "Block      -> statments: List<Stmt>",
             "Expression -> expression: Expr",
-            "Print -> expression: Expr",
-            "Var -> name: Token, initializer: Expr?"
+            "Print      -> expression: Expr",
+            "Var        -> name: Token, initializer: Expr?"
         )
     )
 }
